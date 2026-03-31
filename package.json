@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "moeez614.github.io/hospital/",
+  "homepage": "moeez614.github.io/yt/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -15,7 +15,7 @@
   "dependencies": {
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-hook-form": "^7.69.0",
+    "react-hook-form": "^7.72.0",
     "react-router-dom": "^7.11.0",
     "recharts": "^3.6.0"
   },

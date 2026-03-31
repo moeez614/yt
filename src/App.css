@@ -870,3 +870,69 @@
         right: 20px;
     }
 }
+.admin-dashboardone ul{
+    padding: 30px 10px;
+}
+.admin-dashboardone ul a{
+    text-decoration: none;
+    color: white;
+
+}
+
+.admin-dashboardone ul li{
+    list-style: none;
+    padding: 10px;
+        /* border-top: 1px solid black; */
+    border-bottom: 1px solid black;
+}
+.admin-dashboardone ul li:hover{
+    background-color: gainsboro;
+    color: black;
+}
+.hashtag a li{
+    font-size: 14px;
+    font-weight: 400;
+    padding: 10px 20px;
+    background-color: #E8F5E9;
+    color: black;
+}
+
+.staff-mang{
+    background-color: #E8F5E9;
+    width: 80vw;
+    height: 100vh;
+}
+.edit-staff{
+    background-color: gainsboro;
+    /* width: 0vw; */
+    /* height: 100vh; */
+    border-radius: 5px;
+    padding: 30px;
+    margin: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.edit-staff h5{
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.daba form{
+    padding: 10px;
+}
+.daba form input{
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.daba form button{
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #337836;
+    color: whitesmoke;
+}
