@@ -12,6 +12,7 @@ import Register from './Components/Register'
 import Dr_profile from './Pages/Dr_profile'
 import Googlemap from './Components/Googlemap'
 import Staff from './Components/Staff'
+import Disease from './Components/Disease'
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
             <Route index element={<DashSide />}></Route>
             <Route path='appointment' element={<Appointment />}></Route>
             <Route path='staff' element={<Staff />}></Route>
+            <Route path='patients' element={<Disease />}></Route>
           </Route>
           {/* Patient Portal */}
           <Route path='/patient_portal'>

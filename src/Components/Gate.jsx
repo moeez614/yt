@@ -4,6 +4,7 @@ import Departments from '../Components/Departments'
 import Footer from '../Components/Footer'
 import { NavLink } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { format } from 'date-fns'
 
 
 const Gate = () => {
@@ -12,13 +13,7 @@ const Gate = () => {
   const [dropdown3, setdropdown3] = useState(true)
   const [dropdown4, setdropdown4] = useState(true)
 
-  const [time, setTime] = useState(new Date())
-
-  useEffect(() => {
-    setInterval(() => {
-      setTime(new Date())
-    }, 1000);
-  }, [])
+  const time = new Date();
 
 
 
@@ -144,25 +139,40 @@ const Gate = () => {
           Allied Hospital
         </h3>
         <div className="gray-chart-patients">
-          {/* table of patients */}
-          <h5>Dated : {time.toLocaleDateString()}</h5>
+          {/* <h5>Dated : {time.toLocaleDateString()}</h5> */}
+          <h5>Dated : {format(new Date(), 'eeee, MMMM do')}</h5>
           <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Gender</th>
-                <th>Mobile</th>
-                <th>Address</th>
-              </tr>
-            </thead>
             <tbody>
               <tr>
-                <td>John Doe</td>
-                <td>25</td>
-                <td>Male</td>
-                <td>1234567890</td>
-                <td>123 Main St</td>
+                <td>Number of covid 19 patientsin 24 hours</td>
+                <td>00</td>
+              </tr><tr>
+                <td>Number of Dengue patients in 24 hours</td>
+                <td>00</td>
+              </tr>
+              <tr>
+                <td>Number of Malaria patients in 24 hours</td>
+                <td>00</td>
+              </tr>
+              <tr>
+                <td>Number of Typhoid patients in 24 hours</td>
+                <td>00</td>
+              </tr>
+              <tr>
+                <td>Number of Hepatitis patients in 24 hours</td>
+                <td>00</td>
+              </tr>
+              <tr>
+                <td>Number of Influenza patients in 24 hours</td>
+                <td>00</td>
+              </tr>
+              <tr>
+                <td>Number of Pneumonia patients in 24 hours</td>
+                <td>00</td>
+              </tr>
+              <tr>
+                <td>Number of Chickenpox patients in 24 hours</td>
+                <td>00</td>
               </tr>
             </tbody>
           </table>

@@ -2,6 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 // import { Outlet } from 'react-router-dom'
 import { useState } from 'react'
+import whitelogo from '../assets/white-logo.png'
 
 const Dashboard = () => {
 
@@ -15,8 +16,8 @@ const Dashboard = () => {
   return (
     <div>
       <section className='admin-dashboardone'>
-        <img src="/white-logo.png" alt="/black-logo.png" height={"40px"} />
-        <h5>Admin Dashboard</h5>
+        <div className="new-img-logo" style={{backgroundImage: `url(${whitelogo})`}}></div>
+        <NavLink to={'/admin'} className='class-name'>Admin Dashboard</NavLink>
         <ul>
           <NavLink onClick={()=>{setdropdown(!dropdown) ; setdropdown1(true); setdropdown2(true); setdropdown3(true); setdropdown4(true)}}>
             <li>
@@ -27,7 +28,7 @@ const Dashboard = () => {
           {
             !dropdown &&
             <div className='hashtag'>
-              <NavLink>
+              <NavLink to={"Patients"}>
                 <li><i class="fa-solid fa-file"></i> Patients & Visitors</li>
               </NavLink>
               <NavLink to={'staff'}>
