@@ -3,10 +3,45 @@ import { useForm, useFormState } from 'react-hook-form'
 import { useState, useEffect } from 'react';
 import { NavLink, Outlet } from 'react-router-dom'
 import { format } from 'date-fns';
+import axios from 'axios';
 
 const Staff = () => {
   let { register, handleSubmit, formState: { errors } } = useForm();
   const date = new Date();
+
+  const [Doctors, setDoctors] = useState("");
+  const [Nurses, setNurses] = useState("");
+  const [Paramedics, setParamedics] = useState("");
+  const [Others, setOthers] = useState("");
+
+  const [DATA, setDATA] = useState([])
+
+ const handlesubmit = async (e)=>{
+  e.preventDefault();
+  try {
+    const response = await axios.post(`http://localhost:5000/api/staff`, {
+      Doctors,
+      Nurses,
+      Paramedics,
+      Others,
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.error(error, "bhai, error staff.jsx file ma ha!");
+  }
+ }
+
+ useEffect(() => {
+   try{
+    axios.get(`http://localhost:5000/api/staff`)
+    .then(res => setDATA(res.data))
+    .catch(err => console.log(err))
+    console.log(DATA);
+   }catch(error){
+    console.error(error, "bhai, error staff.jsx file ma ha!");
+   }
+ }, [])
+ 
 
 
   return (
@@ -16,19 +51,21 @@ const Staff = () => {
         <section className="details">
           <div className="box-dr">
             <h4><i className="fa-solid fa-user-doctor"></i>Doctors</h4>
-            <h5>00</h5>
+            {DATA.map(data => 
+              <p key={data._id}>{data.Doctors}</p>
+            )}
           </div>
           <div className="box-dr">
             <h4><i className="fa-solid fa-user-nurse"></i>Nurses</h4>
-            <h5>00</h5>
+            <h5>{Nurses}</h5>
           </div>
           <div className="box-dr">
             <h4><i className="fa-solid fa-briefcase-medical"></i>Paramedics</h4>
-            <h5>00</h5>
+            <h5>{Paramedics}</h5>
           </div>
           <div className="box-dr">
             <h4><i className="fa-solid fa-staff-snake"></i>Others</h4>
-            <h5>00</h5>
+            <h5>{Others}</h5>
           </div>
         </section>
 
@@ -45,12 +82,20 @@ const Staff = () => {
             </h4>
 
             <div className="daba">
-              <form action="">
-                <input type="number" placeholder='Number of Doctor' /><br />
-                <input type="number" placeholder='Number of Nurses' /><br />
-                <input type="number" placeholder='Number of Paramedics' /><br />
-                <input type="number" placeholder='Number of Others' /><br />
-                <button>Submit</button>
+              <form onSubmit={handlesubmit}>
+                <input type="number" placeholder='Number of Doctor'
+                onChange={(e)=>setDoctors(e.target.value)}
+                /><br />
+                <input type="number" placeholder='Number of Nurses' 
+                onChange={(e)=>setNurses(e.target.value)}
+                /><br />
+                <input type="number" placeholder='Number of Paramedics' 
+                onChange={(e)=>setParamedics(e.target.value)}
+                /><br />
+                <input type="number" placeholder='Number of Others' 
+                onChange={(e)=>setOthers(e.target.value)}
+                /><br />
+                <button type='submit'>Submit</button>
               </form>
 
             </div>
