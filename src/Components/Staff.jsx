@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm, useFormState } from 'react-hook-form'
 import { useState, useEffect } from 'react';
 import { NavLink, Outlet } from 'react-router-dom'
-import { format } from 'date-fns';
+import { format, set } from 'date-fns';
 import axios from 'axios';
 
 const Staff = () => {
@@ -15,34 +15,51 @@ const Staff = () => {
   const [Others, setOthers] = useState("");
 
   const [DATA, setDATA] = useState([])
+  const [Record, setRecord] = useState([])
+  const latest = DATA[DATA.length - 1];
 
- const handlesubmit = async (e)=>{
-  e.preventDefault();
-  try {
-    const response = await axios.post(`http://localhost:5000/api/staff`, {
-      Doctors,
-      Nurses,
-      Paramedics,
-      Others,
-    });
-    console.log(response.data);
-  } catch (error) {
-    console.error(error, "bhai, error staff.jsx file ma ha!");
+  const handlesubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`http://localhost:5000/api/staff`, {
+        Doctors,
+        Nurses,
+        Paramedics,
+        Others,
+      });
+      setDATA([...DATA, response.data]);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error, "bhai, error staff.jsx file ma ha!");
+    }
   }
- }
 
- useEffect(() => {
-   try{
-    axios.get(`http://localhost:5000/api/staff`)
-    .then(res => setDATA(res.data))
-    .catch(err => console.log(err))
-    console.log(DATA);
-   }catch(error){
-    console.error(error, "bhai, error staff.jsx file ma ha!");
-   }
- }, [])
- 
+  useEffect(() => {
+    const power = async () => {
+      try {
+        await axios.get(`http://localhost:5000/api/staff`)
+          .then(res => setDATA(res.data))
+          .catch(err => console.log(err))
 
+        await axios.get(`http://localhost:5000/api/record`)
+          .then(res => setRecord(res.data))
+          .catch(err => console.log(err))
+      } catch (error) {
+        console.error(error, "bhai, error staff.jsx file ma ha!");
+      }
+    }
+    power()
+  }, [])
+
+  const deleteme = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/staff/${id}`)
+      setRecord(Record.filter(data => data._id !== id))
+    }
+    catch (error) {
+      console.error(error, "bhai, error staff.jsx file ma ha!");
+    }
+  }
 
   return (
     <div>
@@ -51,21 +68,19 @@ const Staff = () => {
         <section className="details">
           <div className="box-dr">
             <h4><i className="fa-solid fa-user-doctor"></i>Doctors</h4>
-            {DATA.map(data => 
-              <p key={data._id}>{data.Doctors}</p>
-            )}
+            <h5>{latest?.Doctors}</h5>
           </div>
           <div className="box-dr">
             <h4><i className="fa-solid fa-user-nurse"></i>Nurses</h4>
-            <h5>{Nurses}</h5>
+            <h5>{latest?.Nurses}</h5>
           </div>
           <div className="box-dr">
             <h4><i className="fa-solid fa-briefcase-medical"></i>Paramedics</h4>
-            <h5>{Paramedics}</h5>
+            <h5>{latest?.Paramedics}</h5>
           </div>
           <div className="box-dr">
             <h4><i className="fa-solid fa-staff-snake"></i>Others</h4>
-            <h5>{Others}</h5>
+            <h5>{latest?.Others}</h5>
           </div>
         </section>
 
@@ -77,23 +92,22 @@ const Staff = () => {
               This information is for users and staff.
             </h5>
             <h4>
-              {/* Dated : {time.toLocaleDateString()} */}
               Dated : {format(date, 'eeee,MMMM do,yyyy')}
             </h4>
 
             <div className="daba">
               <form onSubmit={handlesubmit}>
                 <input type="number" placeholder='Number of Doctor'
-                onChange={(e)=>setDoctors(e.target.value)}
+                  onChange={(e) => setDoctors(e.target.value)}
                 /><br />
-                <input type="number" placeholder='Number of Nurses' 
-                onChange={(e)=>setNurses(e.target.value)}
+                <input type="number" placeholder='Number of Nurses'
+                  onChange={(e) => setNurses(e.target.value)}
                 /><br />
-                <input type="number" placeholder='Number of Paramedics' 
-                onChange={(e)=>setParamedics(e.target.value)}
+                <input type="number" placeholder='Number of Paramedics'
+                  onChange={(e) => setParamedics(e.target.value)}
                 /><br />
-                <input type="number" placeholder='Number of Others' 
-                onChange={(e)=>setOthers(e.target.value)}
+                <input type="number" placeholder='Number of Others'
+                  onChange={(e) => setOthers(e.target.value)}
                 /><br />
                 <button type='submit'>Submit</button>
               </form>
@@ -116,114 +130,20 @@ const Staff = () => {
               </thead>
               <tbody>
 
-                <tr>
-                  <td>1 march 2026</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>
-                    <button>
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Tuesday,March 31st,2026</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>
-                    <button>
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>
-                    <button>
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>
-                    <button>
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>
-                    <button>
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>
-                    <button>
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>
-                    <button>
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>
-                    <button>
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>
-                    <button>
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
+                {Record.map(data =>
+                  <tr key={data._id}>
+                    <td>{data.date}</td>
+                    <td>{data.Doctors}</td>
+                    <td>{data.Nurses}</td>
+                    <td>{data.Paramedics}</td>
+                    <td>{data.Others}</td>
+                    <td>
+                      <button onClick={() => deleteme(data._id)}>
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                )}
               </tbody>
 
             </table>
