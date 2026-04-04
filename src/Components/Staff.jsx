@@ -1,8 +1,8 @@
 import React from 'react'
-import { useForm, useFormState } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { useState, useEffect } from 'react';
 import { NavLink, Outlet } from 'react-router-dom'
-import { format, set } from 'date-fns';
+import { format} from 'date-fns';
 import axios from 'axios';
 
 const Staff = () => {
@@ -28,6 +28,7 @@ const Staff = () => {
         Others,
       });
       setDATA([...DATA, response.data]);
+      setRecord([...Record, response.data]);
       console.log(response.data);
     } catch (error) {
       console.error(error, "bhai, error staff.jsx file ma ha!");
@@ -53,7 +54,7 @@ const Staff = () => {
 
   const deleteme = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/staff/${id}`)
+      await axios.delete(`http://localhost:5000/api/record/${id}`)
       setRecord(Record.filter(data => data._id !== id))
     }
     catch (error) {
@@ -84,7 +85,6 @@ const Staff = () => {
           </div>
         </section>
 
-        {/* edit staff */}
         <section className='flex'>
           <div className='edit-staff'>
             <h3>Staff Statistics</h3>
@@ -132,7 +132,7 @@ const Staff = () => {
 
                 {Record.map(data =>
                   <tr key={data._id}>
-                    <td>{data.date}</td>
+                    <td>{format(new Date(data.date) , 'eeee ,MMMM do')}</td>
                     <td>{data.Doctors}</td>
                     <td>{data.Nurses}</td>
                     <td>{data.Paramedics}</td>

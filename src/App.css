@@ -977,8 +977,8 @@
 
 .staff-record {
     background-color: gainsboro;
-    padding: 30px;
-    margin: 20px;
+    padding: 20px;
+    margin:20px 10px;
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -1058,7 +1058,7 @@
     background-color: rgb(195, 195, 195);
 }
 
-.input-patient-surva{
+.input-patient-surva {
     margin: 20px;
     background-color: gainsboro;
     border-radius: 5px;
@@ -1067,7 +1067,7 @@
     width: calc(100% - 60px);
 }
 
-.input-patient-surva form input{
+.input-patient-surva form input {
     padding: 10px;
     margin: 10px;
     width: 200px;
@@ -1076,7 +1076,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.input-patient-surva form button{
+.input-patient-surva form button {
     padding: 10px;
     margin: 10px;
     width: 220px;
@@ -1087,7 +1087,8 @@
     color: whitesmoke;
     cursor: pointer;
 }
-.date{
+
+.date {
     padding-left: 30px;
     padding-top: 20px;
 }

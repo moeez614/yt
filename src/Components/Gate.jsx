@@ -5,6 +5,7 @@ import Footer from '../Components/Footer'
 import { NavLink } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { format } from 'date-fns'
+import axios from 'axios'
 
 
 const Gate = () => {
@@ -13,9 +14,22 @@ const Gate = () => {
   const [dropdown3, setdropdown3] = useState(true)
   const [dropdown4, setdropdown4] = useState(true)
 
-  const time = new Date();
+  const [Update , setUpdate] = useState([])
+  const latest = Update[Update.length - 1];
 
-
+  useEffect(() => {
+    const process = async () => {
+      try {
+         await axios.get(`http://localhost:5000/api/gate`)
+        .then(res => setUpdate(res.data))
+        .catch(err => console.log(err))
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    process();
+  }, [])
+  
 
   return (
     <div>
@@ -139,7 +153,6 @@ const Gate = () => {
           Allied Hospital
         </h3>
         <div className="gray-chart-patients">
-          {/* <h5>Dated : {time.toLocaleDateString()}</h5> */}
           <h5>Dated : {format(new Date(), 'eeee, MMMM do')}</h5>
           <table>
             <tbody>
@@ -181,7 +194,7 @@ const Gate = () => {
       <section className="details">
         <div className="box-dr">
           <h4><i className="fa-solid fa-user-doctor"></i>Doctors</h4>
-          <h5>00</h5>
+          <h5>{latest?.Doctors}</h5>
         </div>
         <div className="box-dr">
           <h4><i className="fa-solid fa-user-nurse"></i>Staff Nurses</h4>
