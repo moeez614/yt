@@ -2,19 +2,34 @@ import React from 'react'
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { useForm } from 'react-hook-form';
-import {format} from 'date-fns'
+import { format } from 'date-fns'
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 const Disease = () => {
     const date = new Date();
     const { register, handleSubmit, formState: { errors } } = useForm();
 
+    const [Covid19, setCovid19] = useState("");
+    const [Dengue, setDengue] = useState("");
+    const [Malaria, setMalaria] = useState("");
+    const [Typhoid, setTyphoid] = useState("");
+    const [Hepatitis, setHepatitis] = useState("");
+    const [Influenza, setInfluenza] = useState("");
+    const [Phnemonia, setPhnemonia] = useState("");
+    const [Chikenpox, setChikenpox] = useState("");
+
+    const [Update, setUpdate] = useState([]);
+    const latest = Update[Update.length - 1];
+    const [Record, setRecord] = useState([]);
+
     const data = {
         labels: ["Covid 19", "Dengue", "Malaria", "Typhoid", "Hepatitis", "Influenza", "Phnemonia", "Chikenpox"],
         datasets: [
             {
                 label: "Patients",
-                data: [7, 4, 10, 21, 1, 6, 3, 11],
+                data: [latest?.Covid19, latest?.Dengue, latest?.Malaria, latest?.Typhoid, latest?.Hepatitis, latest?.Influenza, latest?.Phnemonia, latest?.Chikenpox],
                 backgroundColor: [
                     "rgb(255, 99, 132)",
                     "rgb(54, 162, 235)",
@@ -30,6 +45,50 @@ const Disease = () => {
         ]
     }
 
+    const handlesubmit = async (e) => {
+        try {
+            const response = await axios.post(`http://localhost:5000/api/disease`, {
+                Covid19,
+                Dengue,
+                Malaria,
+                Typhoid,
+                Hepatitis,
+                Influenza,
+                Phnemonia,
+                Chikenpox
+            })
+            console.table(response.data);
+
+            setUpdate([...Update, response.data]);
+            setRecord([...Record, response.data]);
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        const process = async () => {
+            await axios.get(`http://localhost:5000/api/diseaserecord`)
+                .then(res => setRecord(res.data))
+                .catch(err => console.log(err))
+            
+            await axios.get(`http://localhost:5000/api/diseaserecord`)
+                .then(res => setUpdate(res.data))
+                .catch(err => console.log(err))
+        }
+        process();
+    }, [])
+
+    const deleteme = async (id) => {
+        try {
+            await axios.delete(`http://localhost:5000/api/diseasedelete/${id}`)
+            setRecord(Record.filter(data => data._id !== id))
+        }
+        catch (error) {
+            console.error(error)
+        }
+    }
 
     return (
         <div className='disease' >
@@ -41,34 +100,34 @@ const Disease = () => {
                         <tbody>
                             <tr>
                                 <td>Number of covid 19 patientsin 24 hours</td>
-                                <td>00</td>
+                                <td>{latest?.Covid19}</td>
                             </tr><tr>
                                 <td>Number of Dengue patients in 24 hours</td>
-                                <td>00</td>
+                                <td>{latest?.Dengue}</td>
                             </tr>
                             <tr>
                                 <td>Number of Malaria patients in 24 hours</td>
-                                <td>00</td>
+                                <td>{latest?.Malaria}</td>
                             </tr>
                             <tr>
                                 <td>Number of Typhoid patients in 24 hours</td>
-                                <td>00</td>
+                                <td>{latest?.Typhoid}</td>
                             </tr>
                             <tr>
                                 <td>Number of Hepatitis patients in 24 hours</td>
-                                <td>00</td>
+                                <td>{latest?.Hepatitis}</td>
                             </tr>
                             <tr>
                                 <td>Number of Influenza patients in 24 hours</td>
-                                <td>00</td>
+                                <td>{latest?.Influenza}</td>
                             </tr>
                             <tr>
                                 <td>Number of Pneumonia patients in 24 hours</td>
-                                <td>00</td>
+                                <td>{latest?.Phnemonia}</td>
                             </tr>
                             <tr>
                                 <td>Number of Chickenpox patients in 24 hours</td>
-                                <td>00</td>
+                                <td>{latest?.Chikenpox}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -82,19 +141,77 @@ const Disease = () => {
 
             <section className="input-patient-surva">
                 <h4 className='title text-center'>Input Patients</h4>
-                <form action="">
-                    <input type="number" placeholder='Number of Covid 19' />
-                    <input type="number" placeholder='Number of Dengue' />
-                    <input type="number" placeholder='Number of Malaria' />
-                    <input type="number" placeholder='Number of Typhoid' />
-                    <input type="number" placeholder='Number of Hepatitus' />
-                    <input type="number" placeholder='Number of Influenza' />
-                    <input type="number" placeholder='Number of Pneumonia' />
-                    <input type="number" placeholder='Number of Chickenpox' />
-                    <button>Submit</button>
+                <form onSubmit={() => handlesubmit()}>
+                    <input type="number" placeholder='Number of Covid 19'
+                        onChange={(e) => setCovid19(e.target.value)}
+                    />
+                    <input type="number" placeholder='Number of Dengue'
+                        onChange={(e) => setDengue(e.target.value)}
+                    />
+                    <input type="number" placeholder='Number of Malaria'
+                        onChange={(e) => setMalaria(e.target.value)}
+                    />
+                    <input type="number" placeholder='Number of Typhoid'
+                        onChange={(e) => setTyphoid(e.target.value)}
+                    />
+                    <input type="number" placeholder='Number of Hepatitis'
+                        onChange={(e) => setHepatitis(e.target.value)}
+                    />
+                    <input type="number" placeholder='Number of Influenza'
+                        onChange={(e) => setInfluenza(e.target.value)}
+                    />
+                    <input type="number" placeholder='Number of Pneumonia'
+                        onChange={(e) => setPhnemonia(e.target.value)}
+                    />
+                    <input type="number" placeholder='Number of Chickenpox'
+                        onChange={(e) => setChikenpox(e.target.value)}
+                    />
+                    <button type="submit">Submit</button>
                 </form>
             </section>
 
+            <div className="staff-record">
+                <h3>Staff Record</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Covid 19</th>
+                            <th>Dengue</th>
+                            <th>Malaria</th>
+                            <th>Typhoid</th>
+                            <th>Hepatitis</th>
+                            <th>Influenza</th>
+                            <th>Pneumonia</th>
+                            <th>Chickenpox</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {Record.map(data =>
+                            <tr key={data._id}>
+                                <td>{format(new Date(data.date), 'eeee ,MMMM do')}</td>
+                                <td>{data.Covid19}</td>
+                                <td>{data.Dengue}</td>
+                                <td>{data.Malaria}</td>
+                                <td>{data.Typhoid}</td>
+                                <td>{data.Hepatitis}</td>
+                                <td>{data.Influenza}</td>
+                                <td>{data.Phnemonia}</td>
+                                <td>{data.Chikenpox}</td>
+
+                                <td>
+                                    <button onClick={() => deleteme(data._id)}>
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+
+                </table>
+            </div>
         </div >
     )
 }
