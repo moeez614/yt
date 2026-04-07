@@ -386,7 +386,8 @@
     align-items: center
 }
 
-.dr-login-design {
+.dr-login-design,
+.dr-reg-design {
     background-color: gainsboro;
     width: 400px;
     height: fit-content;
@@ -394,12 +395,14 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.dr-login-design h3 {
+.dr-login-design h3,
+.dr-reg-design h3 {
     font-size: 20px;
     margin: 10px 15px;
 }
 
-.dr-login-design form {
+.dr-login-design form,
+.dr-reg-design form {
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -407,7 +410,8 @@
     align-items: center;
 }
 
-.dr-login-design form div {
+.dr-login-design form div,
+.dr-reg-design form div {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -419,16 +423,17 @@
     background-color: white;
 }
 
-.dr-login-design form input {
+.dr-login-design form input,
+.dr-reg-design form input {
     width: 80%;
     padding: 10px;
-    /* margin: 10px; */
     border-radius: 10px;
     border: none;
     outline: none;
 }
 
-.dr-login-design form button {
+.dr-login-design form button,
+.dr-reg-design form button {
     width: 80%;
     padding: 10px;
     margin: 10px;
@@ -437,7 +442,8 @@
     color: whitesmoke;
 }
 
-.dr-login-design form button:hover {
+.dr-login-design form button:hover,
+.dr-reg-design form button:hover {
     background-color: #388E3C;
     color: whitesmoke;
 }
@@ -452,9 +458,9 @@
     background-color: #E8F5E9;
     width: 100vw;
     height: 100vh;
-    /* display: flex;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: center */
 }
 
 /* dr-profile */
@@ -472,8 +478,6 @@
 
 .dr-baki {
     background-color: #E8F5E9;
-    /* width: 100vw; */
-    /* height: 100vh; */
 }
 
 .Dropdown-effect {
@@ -978,7 +982,7 @@
 .staff-record {
     background-color: gainsboro;
     padding: 20px;
-    margin:20px 10px;
+    margin: 20px 10px;
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

@@ -1,48 +1,70 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import axios from 'axios'
+import { useState } from 'react'
 
 const Register = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm()
+  const { register, handleSubmit, formState: { errors } } = useForm()
+  const [usern, setUserName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [ConfirmPassword, setConfirmPassword] = useState("")
+
+  const handlesubmit = async () => {
+    try {
+      if (password !== ConfirmPassword) {
+        alert("Passwords do not match")
+        return
+      }
+      await axios.post(`http://localhost:5000/api/register`, {
+        usern,
+        email,
+        password
+      })
+      .then(res => console.log(res.data))
+
+      alert("Signup successfully!")
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className='registration-dr'>
-      <section>
+      <section className='dr-reg-design'>
         <h3>
-            <i class="fa-solid fa-user-doctor"></i>
-            Doctor Registration
+          <i class="fa-solid fa-user-doctor"></i>
+          Doctor Registration
         </h3>
-        <hr />
-        <form action="">
-            {/* Profile phot */}
-            <div><input type="file" placeholder='Profile Photo' required /></div>
-            {/* information */}
-            <h3>Information</h3>
-            <div>
-                <input type="text" placeholder='Full Name'/>
-            </div>
-            <div><input type="text" placeholder='Email' required /></div>
-            <div><input type="text" placeholder='Phone Number' required/></div>
-            <div><input type="password" placeholder='Password' required /></div>
-            {/* professional details */}
-            <h3>Professional Details</h3>
-            <div><input type="text" placeholder='Specialization' required /></div>
-            <div><input type="text" placeholder='Medical registration no.' required/></div>
-            <div><input type="text" placeholder='Qualification' required/></div>
-            <div><input type="text" placeholder='Year of Experience' required/></div>
-            {/* work information */}
-            <h3>Work Info</h3>
-            <div><input type="text" placeholder='Consultation fee (Rs)' required /></div>
-            <div><input type="text" placeholder='Available Days (per week)' required/></div>
-            {/* Documents */}
-            <div><input type="file" placeholder='Medical Certificate' required /></div>
-            <div><input type="file" placeholder='CNIC' required /></div>
-            
+        <form onSubmit={() => handlesubmit()}>
+          <div>
+            <i class="fa-regular fa-user"></i>
+            <input type="text" placeholder='User Name' required 
+            onChange={(e)=> setUserName(e.target.value)}
+            />
+          </div>
+          <div>
+            <i class="fa-solid fa-at"></i>
+            <input type="text" placeholder='Email' required 
+            onChange={(e)=> setEmail(e.target.value)}
+            />
+          </div>
+          <div>
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" placeholder='Password' required 
+            onChange={(e)=> setPassword(e.target.value)}
+            />
+          </div>
+          <div>
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" placeholder='Confirm Password' required 
+            onChange={(e)=> setConfirmPassword(e.target.value)}
+            />
+          </div>
 
-
-
-            <button>Submit</button>
+          <button type='Submit'>Sign Up & Login</button>
         </form>
 
       </section>

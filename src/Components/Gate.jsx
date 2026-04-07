@@ -7,7 +7,6 @@ import { useState, useEffect } from 'react'
 import { format } from 'date-fns'
 import axios from 'axios'
 
-
 const Gate = () => {
   const [dropdown, setdropdown] = useState(true)
   const [dropdown2, setdropdown2] = useState(true)
@@ -20,7 +19,9 @@ const Gate = () => {
   useEffect(() => {
     const process = async () => {
       try {
-         await axios.get(`http://localhost:5000/api/gate`)
+         await axios.get(`http://localhost:5000/api/gate`,{
+          
+         })
         .then(res => setUpdate(res.data))
         .catch(err => console.log(err))
       } catch (error) {
