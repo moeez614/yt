@@ -12,10 +12,11 @@ import Doctor from './Pages/Doctor'
 import Register from './Components/Register'
 import Dr_profile from './Pages/Dr_profile'
 import Googlemap from './Components/Googlemap'
-// import Staff from './Components/Staff'
 const Staff = lazy(() => import('./Components/Staff'))
-// import Disease from './Components/Disease'
 const Disease = lazy(() => import('./Components/Disease'))
+const Patientlogin = lazy(() => import('./Layout/Patientlogin'))
+const Patientregester = lazy(()=> import('./Layout/Patientregester'))
+import PrivateRoute from './Components/Privateroute'
 
 function App() {
 
@@ -39,8 +40,19 @@ function App() {
             <Route path='patients' element={<Disease />}></Route>
           </Route>
           {/* Patient Portal */}
-          <Route path='/patient_portal'>
-            <Route index element={<Patient />}></Route>
+          <Route path='/patientlogin'>
+            <Route index element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <Patientlogin />
+              </Suspense>
+            }></Route>
+            {/* patient registration */}
+            <Route path='patientregistration' element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <Patientregester />
+              </Suspense>
+            }></Route>
+            <Route path='patient' element={<Patient />}></Route>
             <Route path='myprofile' element={<>myprofile</>}></Route>
             <Route path='appointment' element={<Appointment />}></Route>
           </Route>
@@ -48,7 +60,11 @@ function App() {
           <Route path='/doctor_portal'>
             <Route index element={<Doctor />}></Route>
             <Route path='register' element={<Register />}></Route>
-            <Route path='okay' element={<Dr_profile />}></Route>
+            <Route path='okay' element={
+              <PrivateRoute>
+                <Dr_profile />
+              </PrivateRoute>
+            }></Route>
 
           </Route>
 

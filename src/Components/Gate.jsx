@@ -13,24 +13,27 @@ const Gate = () => {
   const [dropdown3, setdropdown3] = useState(true)
   const [dropdown4, setdropdown4] = useState(true)
 
-  const [Update , setUpdate] = useState([])
+  const [Update, setUpdate] = useState([])
   const latest = Update[Update.length - 1];
+  const [graph , setgraph] = useState([]);
+  const latestgraph = graph[graph.length - 1];
 
   useEffect(() => {
     const process = async () => {
       try {
-         await axios.get(`http://localhost:5000/api/gate`,{
-          
-         })
-        .then(res => setUpdate(res.data))
-        .catch(err => console.log(err))
+        const response = await axios.get(import.meta.env.VITE_API_URL + '/api/gate')
+        setUpdate(response.data)
+
+        const graph = await axios.get(import.meta.env.VITE_API_URL + '/api/graph');
+        setgraph(graph.data);
+        console.table(graph.data);
       } catch (error) {
         console.error(error);
       }
     }
     process();
   }, [])
-  
+
 
   return (
     <div>
@@ -159,34 +162,34 @@ const Gate = () => {
             <tbody>
               <tr>
                 <td>Number of covid 19 patientsin 24 hours</td>
-                <td>00</td>
+                <td>{latestgraph?.Covid19 || "00"}</td>
               </tr><tr>
                 <td>Number of Dengue patients in 24 hours</td>
-                <td>00</td>
+                <td>{latestgraph?.Dengue || "00"}</td>
               </tr>
               <tr>
                 <td>Number of Malaria patients in 24 hours</td>
-                <td>00</td>
+                <td>{latestgraph?.Malaria || "00"}</td>
               </tr>
               <tr>
                 <td>Number of Typhoid patients in 24 hours</td>
-                <td>00</td>
+                <td>{latestgraph?.Typhoid || "00"}</td>
               </tr>
               <tr>
                 <td>Number of Hepatitis patients in 24 hours</td>
-                <td>00</td>
+                <td>{latestgraph?.Hepatitis || "00"}</td>
               </tr>
               <tr>
                 <td>Number of Influenza patients in 24 hours</td>
-                <td>00</td>
+                <td>{latestgraph?.Influenza || "00"}</td>
               </tr>
               <tr>
                 <td>Number of Pneumonia patients in 24 hours</td>
-                <td>00</td>
+                <td>{latestgraph?.Phnemonia || "00"}</td>
               </tr>
               <tr>
                 <td>Number of Chickenpox patients in 24 hours</td>
-                <td>00</td>
+                <td>{latestgraph?.Chikenpox || "00"}</td>
               </tr>
             </tbody>
           </table>
@@ -195,19 +198,19 @@ const Gate = () => {
       <section className="details">
         <div className="box-dr">
           <h4><i className="fa-solid fa-user-doctor"></i>Doctors</h4>
-          <h5>{latest?.Doctors}</h5>
+          <h5>{latest?.Doctors || "00"}</h5>
         </div>
         <div className="box-dr">
           <h4><i className="fa-solid fa-user-nurse"></i>Staff Nurses</h4>
-          <h5>00</h5>
+          <h5>{latest?.Nurses || "00"}</h5>
         </div>
         <div className="box-dr">
           <h4><i className="fa-solid fa-briefcase-medical"></i>Paramedics</h4>
-          <h5>00</h5>
+          <h5>{latest?.Paramedics || "00"}</h5>
         </div>
         <div className="box-dr">
           <h4><i className="fa-solid fa-staff-snake"></i>Others</h4>
-          <h5>00</h5>
+          <h5>{latest?.Others || "00"}</h5>
         </div>
       </section>
 

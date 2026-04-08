@@ -22,7 +22,7 @@ const Logo = () => {
                 <li><Link to={"/h"}><i class="fa-solid fa-chart-area"></i>Dashboard</Link></li>
                 <li><Link to={"/admin"}><i class="fa-brands fa-black-tie"></i>Admin</Link></li>
                 <li><Link to={"/doctor_portal"}><i class="fa-solid fa-user-doctor"></i>Doctor Portal</Link></li>
-                <li><Link to={"/patient_portal"}><i class="fa-solid fa-head-side-mask"></i>Patient Portal</Link></li>
+                <li><Link to={"/patientlogin"}><i class="fa-solid fa-head-side-mask"></i>Patient Portal</Link></li>
               </ul>
             </nav> : null
         }
