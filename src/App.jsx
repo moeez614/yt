@@ -8,15 +8,17 @@ import Admin from './Pages/Admin'
 import DashSide from './Components/DashSide'
 import Patient from './Pages/Patient'
 import Appointment from './Pages/Appointment'
-import Doctor from './Pages/Doctor'
-import Register from './Components/Register'
-import Dr_profile from './Pages/Dr_profile'
-import Googlemap from './Components/Googlemap'
+const Doctor = lazy(() => import('./Pages/Doctor'))
+const Register = lazy(() => import('./Components/Register'))
+const Drprofile = lazy(() => import('./Pages/Dr_profile'))
+const Googlemap = lazy(() => import('./Components/Googlemap'))
 const Staff = lazy(() => import('./Components/Staff'))
 const Disease = lazy(() => import('./Components/Disease'))
 const Patientlogin = lazy(() => import('./Layout/Patientlogin'))
-const Patientregester = lazy(()=> import('./Layout/Patientregester'))
+const Patientregester = lazy(() => import('./Layout/Patientregester'))
 import PrivateRoute from './Components/Privateroute'
+// loader
+import Loader from './Components/Loader'
 
 function App() {
 
@@ -25,15 +27,23 @@ function App() {
 
       <HashRouter>
         <Routes>
-          <Route path='/' element={<Gate />}></Route>
+          <Route path='/' element={
+            <Suspense fallback={<Loader />}>
+              <Gate />
+            </Suspense>
+          }></Route>
           <Route path='/h' element={<>enjoy kar</>}></Route>
-          <Route path='/googlemap' element={<Googlemap />}> </Route>
+          <Route path='/googlemap' element={
+              <Suspense fallback={<Loader/>}>
+            <Googlemap />
+            </Suspense>
+            }> </Route>
           {/* Admin Portal */}
           <Route path='/admin' element={<Admin />}>
             <Route index element={<DashSide />}></Route>
             <Route path='appointment' element={<Appointment />}></Route>
             <Route path='staff' element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Loader />}>
                 <Staff />
               </ Suspense>
             }></Route>
@@ -42,13 +52,13 @@ function App() {
           {/* Patient Portal */}
           <Route path='/patientlogin'>
             <Route index element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Loader />}>
                 <Patientlogin />
               </Suspense>
             }></Route>
             {/* patient registration */}
             <Route path='patientregistration' element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Loader />}>
                 <Patientregester />
               </Suspense>
             }></Route>
@@ -58,12 +68,22 @@ function App() {
           </Route>
           {/* Doctor Portal */}
           <Route path='/doctor_portal'>
-            <Route index element={<Doctor />}></Route>
-            <Route path='register' element={<Register />}></Route>
+            <Route index element={
+              <Suspense fallback={<Loader />}>
+                <Doctor />
+              </Suspense>
+            }></Route>
+            <Route path='register' element={
+              <Suspense fallback={<Loader />}>
+                <Register />
+              </Suspense>
+            }></Route>
             <Route path='okay' element={
-              <PrivateRoute>
-                <Dr_profile />
-              </PrivateRoute>
+              <Suspense fallback={<Loader />}>
+                <PrivateRoute>
+                  <Drprofile />
+                </PrivateRoute>
+              </Suspense>
             }></Route>
 
           </Route>

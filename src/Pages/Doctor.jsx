@@ -14,14 +14,14 @@ const Doctor = () => {
 
     const login = async () => {
         try {
-            const res = await axios.post(`http://localhost:5000/api/login`, {
+            const res = await axios.post(import.meta.env.VITE_API_URL + '/api/login', {
                 email,
                 password
             });
             localStorage.setItem("token", res.data.token);
 
             const token = res.data.token
-            await axios.get("http://localhost:5000/api/protected", {
+            await axios.get(import.meta.env.VITE_API_URL + "/api/protected", {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

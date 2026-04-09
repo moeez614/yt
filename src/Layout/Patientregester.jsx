@@ -10,6 +10,25 @@ const [usern, setUserName] = useState("")
   const [password, setPassword] = useState("")
   const [ConfirmPassword, setConfirmPassword] = useState("")
 
+  const handlesubmit = async () => {
+    try {
+      if (password !== ConfirmPassword) {
+        alert("Passwords do not match")
+        return
+      }
+      await axios.post(import.meta.env.VITE_API_URL + '/api/patreg', {
+        usern,
+        email,
+        password
+      })
+      .then(res => console.log(res.data))
+
+      alert("Signup successfully!")
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className='registration-dr'>
       <section className='dr-reg-design'>
