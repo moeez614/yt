@@ -18,13 +18,12 @@ const Patientlogin = () => {
                 password
             });
             localStorage.setItem("token", res.data.token);
-            // navigate("/patientdashboard")
-            console.log(res.data)
             await axios.get(import.meta.env.VITE_API_URL + '/api/pprotected', {
                 headers: {
                     Authorization: `Bearer ${res.data.token}`
                 }
             })
+            navigate("/patient_profile")
             
         }
         catch(error){

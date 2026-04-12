@@ -16,9 +16,10 @@ const Staff = lazy(() => import('./Components/Staff'))
 const Disease = lazy(() => import('./Components/Disease'))
 const Patientlogin = lazy(() => import('./Layout/Patientlogin'))
 const Patientregester = lazy(() => import('./Layout/Patientregester'))
-import PrivateRoute from './Components/Privateroute'
+const Myprofile = lazy(() => import('./Pages/Myprofile'))
 // loader
 import Loader from './Components/Loader'
+import PrivateRoute from './Components/PrivateRoute';
 
 function App() {
 
@@ -34,10 +35,10 @@ function App() {
           }></Route>
           <Route path='/h' element={<>enjoy kar</>}></Route>
           <Route path='/googlemap' element={
-              <Suspense fallback={<Loader/>}>
-            <Googlemap />
+            <Suspense fallback={<Loader />}>
+              <Googlemap />
             </Suspense>
-            }> </Route>
+          }> </Route>
           {/* Admin Portal */}
           <Route path='/admin' element={<Admin />}>
             <Route index element={<DashSide />}></Route>
@@ -62,10 +63,22 @@ function App() {
                 <Patientregester />
               </Suspense>
             }></Route>
+          </Route>
+          <Route path='/patient_profile'>
+            <Route index element={
+              <Suspense fallback={<Loader />}>
+                <Patient />
+              </Suspense>
+            }></Route>
             <Route path='patient' element={<Patient />}></Route>
-            <Route path='myprofile' element={<>myprofile</>}></Route>
+            <Route path='myprofile' element={
+              <Suspense fallback={<Loader />}>
+                <Myprofile />
+              </Suspense>
+            }></Route>
             <Route path='appointment' element={<Appointment />}></Route>
           </Route>
+
           {/* Doctor Portal */}
           <Route path='/doctor_portal'>
             <Route index element={

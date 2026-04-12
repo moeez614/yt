@@ -26,7 +26,6 @@ const Gate = () => {
 
         const graph = await axios.get(import.meta.env.VITE_API_URL + '/api/graph');
         setgraph(graph.data);
-        console.table(graph.data);
       } catch (error) {
         console.error(error);
       }

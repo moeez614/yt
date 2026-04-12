@@ -1097,15 +1097,14 @@
     padding-top: 20px;
 }
 
-/* From Uiverse.io by AbanoubMagdy1 */
-
-.display-loader{
+.display-loader {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     width: 100%;
 }
+
 .loader {
     --dim: 3rem;
     width: var(--dim);
@@ -1168,4 +1167,101 @@
     100% {
         transform: scale(1) rotate(360deg);
     }
+}
+
+.edit-profile {
+    background-color: #E8F5E9;
+    /* height: 100vh; */
+    padding: 20px;
+}
+
+.edit-profile form {
+    background-color: gainsboro;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(174, 173, 173, 0.2), 0 6px 20px 0 rgba(156, 155, 155, 0.19);
+    padding: 20px;
+    width: calc(100% - 40px);
+    display: flex;
+    justify-content: space-around;
+}
+
+.edit-profile form input {
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    height: fit-content;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.edit-profile form button {
+    padding: 10px;
+    margin: 10px;
+    width: 220px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(96, 95, 95, 0.2), 0 6px 20px 0 rgba(129, 128, 128, 0.19);
+    background-color: #337836;
+    color: whitesmoke;
+    cursor: pointer;
+    height: fit-content;
+}
+
+.edit-profile form button:hover {
+    background-color: #3a8e3e;
+}
+.edit-profile form i{
+    color: navy;
+}
+
+.label {
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+    padding: 10px;
+}
+
+.label select {
+    padding: 10px;
+    margin: 10px 0px;
+    width: 220px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(98, 98, 98, 0.2), 0 6px 20px 0 rgba(110, 109, 109, 0.19);
+}
+.camera{
+    border: 2px dashed black;
+    border-radius: 5px;
+    height: fit-content;
+}
+.camera img {
+    width: 150px;
+}
+
+.camera h6 {
+    font-size: 12px;
+    font-weight: 600;
+    color: black;
+    padding: 10px;
+}
+
+.camera {
+    cursor: pointer;
+}
+.allign{
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    flex-direction: column;
+}
+.textarea textarea{
+    padding: 10px;
+    margin: 10px 0px;
+    border: none;
+    resize: none;
+    border-radius: 5px;
+    background-color: whitesmoke;
+    height: 200px;
+    box-shadow: 0 4px 8px 0 rgba(100, 99, 99, 0.2), 0 6px 20px 0 rgba(124, 122, 122, 0.19);
 }
