@@ -1,1 +1,0 @@
-import{j as s}from"./index-lsdlmLHz.js";const i=()=>s.jsxs("div",{children:[s.jsx("div",{className:"dr-chalo",children:s.jsx("img",{src:"/white-logo.png",alt:"logo"})}),s.jsx("div",{className:"dr-baki",children:"djhfg"})]});export{i as default};
