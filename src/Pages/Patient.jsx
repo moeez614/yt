@@ -1,8 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PatientDash from '../Components/PatientDash'
+import axios from 'axios'
 const Patient = () => {
+    const [patient, setPatient] = useState([])
+    // const latest = patient[patient.length - 1];
+    console.table(patient)
+
+    useEffect(() => {
+        const chalni = async () => {
+            await axios.get(import.meta.env.VITE_API_URL + '/api/patientcrools').then((res) => {
+                setPatient([...res.data])
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+        chalni()
+    }, [])
+    patient.map((data) => {
+        console.log(data.imge.data)
+    })
+
     return (
+
         <>
             <PatientDash />
             {/* <img src="/patientcare.webp" alt="" className='patient-care-image' /> */}
@@ -27,45 +47,71 @@ const Patient = () => {
                         <div className='patient-profile'>
                             <div className='img-frame'>
                                 <h4>
+                                    <div>
+
                                     <i class="fa-solid fa-id-badge"></i>
-                                    Moeez Ali
+                                    {
+                                        patient[0]?.usern
+                                    }
+                                    </div>
+                                    <h6 className='h6'>Uid : {patient[0]?.cnic}</h6>
                                 </h4>
-                                <img src="/Frame.png" alt="" />
+                                {
+                                    patient.map((data, index) => {
+                                        const base64 = btoa(
+                                            new Uint8Array(data.imge.data.data)
+                                                .reduce((acc, byte) => acc + String.fromCharCode(byte), "")
+                                        );
+
+                                        return (
+                                            <img
+                                                key={index}
+                                                src={`data:${data.imge.contentType};base64,${base64}`}
+                                                width="100"
+                                                alt=""
+                                            />
+                                        );
+                                    })
+                                }
                             </div>
                             <section className="detail-p">
                                 <div>
                                     <div>
 
-                                        <h5>Age :</h5>
-                                        <h6>~~</h6>
+                                        <h5>DOB :</h5>
+                                        <h6>{patient[0]?.dob}</h6>
                                     </div>
                                     <div>
-                                        <h5>
+                                        <h6>
                                             <i class="fa-solid fa-droplet khoon"></i>
-                                        </h5>
-                                        <h6>~~</h6>
+                                            {patient[0]?.blood}
+                                        </h6>
                                     </div>
                                 </div>
-                                <div>
-                                    <h5>Gender :</h5>
-                                    <h6>~~</h6>
-                                </div>
-                                <div>
-                                    <h5><i class="fa-solid fa-location-dot loc"></i></h5>
-                                    <h6>~~</h6>
-                                </div>
 
                                 <div>
-                                    <h5>
+                                    <h6>
+                                        <i class="fa-solid fa-location-dot loc"></i>
+                                        {patient[0]?.address}
+                                    </h6>
+                                    <h6>
+                                        <i class="fa-solid fa-people-group"></i>
+                                        {patient[0]?.guardian}
+                                    </h6>
+                                    
+                                </div>
+                                <div>
+                                    <h6><i class="fa-solid fa-phone tali"></i>{patient[0]?.phone}</h6>
+                                    <h6><i class="fa-solid fa-phone tali"></i>{patient[0]?.ephone}</h6>
+                                </div>
+                                <div>
+                                    <h6><i class="fa-solid fa-person-half-dress"></i>
+                                    {patient[0]?.gender}</h6>
+                                    <h6>
                                         <i class="fa-solid fa-address-card navy"></i>
-                                    </h5>
-                                    <h6>~~</h6>
+                                        {patient[0]?.email}
+                                    </h6>
                                 </div>
-                                <div>
-                                    <h5><i class="fa-solid fa-phone tali"></i></h5>
-                                    <h6>~~</h6>
-                                </div>
-
                                 <div className="edit-p-info">
                                     <Link to={"myprofile"}>
                                         <i class="fa-solid fa-pen-to-square"></i>

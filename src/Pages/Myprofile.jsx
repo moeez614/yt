@@ -3,7 +3,10 @@ import PatientDash from '../Components/PatientDash'
 import { useState, useEffect } from 'react'
 import Frame from "../assets/Frame.png"
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+
 const Myprofile = () => {
+    const navigate = useNavigate()
     const [file, setFile] = useState(null);
     const [url, setUrl] = useState(null);
     const [files, setfile] = useState(null)
@@ -19,8 +22,11 @@ const Myprofile = () => {
     const [blood, setblood] = useState("")
     const [text, settext] = useState("")
 
+    const [status, setstatus] = useState('')
+
     const formsubmit = () => {
         try {
+            const {id} = useParams()
             const formdata = new FormData();
             formdata.append("image", files);
             formdata.append("usern", usern);
@@ -34,22 +40,22 @@ const Myprofile = () => {
             formdata.append("gender", gender);
             formdata.append("blood", blood);
             formdata.append("text", text);
-            
+
             console.log(typeof formdata)
-            axios.post(import.meta.env.VITE_API_URL + '/api/profile_edit', 
+            axios.put(import.meta.env.VITE_API_URL + `/api/profile_edit/${id}`,
                 formdata,
                 {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
                 }
-            ).then(res => console.log(res.data))
+            ).then(setstatus("Patient profile updated successfully"))
+
+            navigate("/patient_profile")
         }
         catch (error) {
             console.log(error)
-            if (error.response.status === 400) {
-                alert(error.response.data.error)
-            }
+            setstatus("Patient profile failed")
         }
     }
 
@@ -112,9 +118,12 @@ const Myprofile = () => {
                             onChange={(e) => setemail(e.target.value)}
                         /> <br />
                         <label htmlFor=""><i class="fa-regular fa-id-badge"></i>CNIC</label>
-                        <input type="number" placeholder='12345-1234567-8'
+                        <input type="text" placeholder='12345-1234567-8'
                             required
                             onChange={(e) => setcnic(e.target.value)}
+                            pattern='[0-9]{5}-[0-9]{7}-[0-9]{1}'
+                            maxLength={15}
+                            // onChange={controlcnic()}
                         /><br />
                         <label htmlFor=""><i class="fa-regular fa-calendar"></i>DOB</label>
                         <input type="date" placeholder='Date of Birth'
@@ -168,6 +177,11 @@ const Myprofile = () => {
                     </div>
                 </form>
             </section>
+            {
+                status && <h6 className='status'>
+                    {status}
+                </h6>
+            }
         </div>
     )
 }
