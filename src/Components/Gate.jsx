@@ -40,7 +40,9 @@ const Gate = () => {
       <section className='Dropdown-effect'>
         <div>
 
-          <button onClick={() => { setdropdown(!dropdown); setdropdown2(true); setdropdown3(true); setdropdown4(true) }}>
+          <button onMouseEnter={() => { setdropdown(!dropdown); setdropdown2(true); setdropdown3(true); setdropdown4(true) }}
+            onMouseLeave={() => {setdropdown(dropdown); setdropdown2(true); setdropdown3(true); setdropdown4(true) }}
+            >
             Hospital History
             {
               dropdown ? <i className="fa-solid fa-angle-up"></i> : <i className="fa-solid fa-angle-down"></i>

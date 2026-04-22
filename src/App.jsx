@@ -7,7 +7,7 @@ import Logo from './Layout/Logo'
 import Admin from './Pages/Admin'
 import DashSide from './Components/DashSide'
 import Patient from './Pages/Patient'
-import Appointment from './Pages/Appointment'
+const Appointment = lazy(() => import('./Pages/Appointment'))
 const Doctor = lazy(() => import('./Pages/Doctor'))
 const Register = lazy(() => import('./Components/Register'))
 const Drprofile = lazy(() => import('./Pages/Dr_profile'))
@@ -42,7 +42,11 @@ function App() {
           {/* Admin Portal */}
           <Route path='/admin' element={<Admin />}>
             <Route index element={<DashSide />}></Route>
-            <Route path='appointment' element={<Appointment />}></Route>
+            <Route path='appointment' element={
+              <Suspense fallback={<Loader />}>
+                <Appointment />
+              </Suspense>
+              }></Route>
             <Route path='staff' element={
               <Suspense fallback={<Loader />}>
                 <Staff />

@@ -2,24 +2,37 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PatientDash from '../Components/PatientDash'
 import axios from 'axios'
+import Loader from '../Components/Loader'
 const Patient = () => {
     const [patient, setPatient] = useState([])
-    // const latest = patient[patient.length - 1];
+    const [loading, setLoading] = useState(true)
     console.table(patient)
 
     useEffect(() => {
+
         const chalni = async () => {
-            await axios.get(import.meta.env.VITE_API_URL + '/api/patientcrools').then((res) => {
-                setPatient([...res.data])
-            }).catch((err) => {
-                console.log(err)
-            })
+            try {
+                const rew = await axios.get(import.meta.env.VITE_API_URL + '/api/crools',
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`
+                        }
+                    }
+                )
+                setPatient([rew.data[0]])
+            }
+            catch (error) {
+                console.log(error)
+            }
+            finally {
+                setLoading(false)
+            }
         }
         chalni()
     }, [])
-    patient.map((data) => {
-        console.log(data.imge.data)
-    })
+    if (loading) {
+        return <Loader />
+    }
 
     return (
 
@@ -49,30 +62,24 @@ const Patient = () => {
                                 <h4>
                                     <div>
 
-                                    <i class="fa-solid fa-id-badge"></i>
-                                    {
-                                        patient[0]?.usern
-                                    }
+                                        <i class="fa-solid fa-id-badge"></i>
+                                        {
+                                            patient[0]?.usern
+                                        }
                                     </div>
                                     <h6 className='h6'>Uid : {patient[0]?.cnic}</h6>
                                 </h4>
                                 {
-                                    patient.map((data, index) => {
-                                        const base64 = btoa(
-                                            new Uint8Array(data.imge.data.data)
-                                                .reduce((acc, byte) => acc + String.fromCharCode(byte), "")
-                                        );
-
-                                        return (
-                                            <img
-                                                key={index}
-                                                src={`data:${data.imge.contentType};base64,${base64}`}
-                                                width="100"
-                                                alt=""
-                                            />
-                                        );
-                                    })
+                                    patient &&
+                                    (
+                                        <img src={`data:${patient[0]?.imge?.contentType};base64,${btoa(
+                                            new Uint8Array(patient[0]?.imge?.data?.data || []).reduce((data, byte) => data + String.fromCharCode(byte), '')
+                                        )}`}
+                                            // alt={url}
+                                        />
+                                    )
                                 }
+
                             </div>
                             <section className="detail-p">
                                 <div>
@@ -98,7 +105,7 @@ const Patient = () => {
                                         <i class="fa-solid fa-people-group"></i>
                                         {patient[0]?.guardian}
                                     </h6>
-                                    
+
                                 </div>
                                 <div>
                                     <h6><i class="fa-solid fa-phone tali"></i>{patient[0]?.phone}</h6>
@@ -106,7 +113,7 @@ const Patient = () => {
                                 </div>
                                 <div>
                                     <h6><i class="fa-solid fa-person-half-dress"></i>
-                                    {patient[0]?.gender}</h6>
+                                        {patient[0]?.gender}</h6>
                                     <h6>
                                         <i class="fa-solid fa-address-card navy"></i>
                                         {patient[0]?.email}
