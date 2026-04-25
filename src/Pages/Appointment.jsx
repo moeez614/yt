@@ -1,8 +1,10 @@
 import React from 'react'
 import PatientDash from '../Components/PatientDash'
+import Footer from '../Components/Footer'
 import doctor from '../assets/doctor.png'
 import check from '../assets/check.png'
 import calendar from '../assets/calendar.png'
+import hospital from '../assets/hospital-building.png'
 
 const Appointment = () => {
   return (
@@ -30,9 +32,59 @@ const Appointment = () => {
               <h6>Quality Care</h6>
             </div>
           </section>
-
         </div>
+        {/* after image lalalllalalallalalallalalalal */}
+        <section className='next-plz'>
+          <h3>How it works</h3>
+          <div className='next'>
+            <div className="box-app">
+              <img src={hospital} alt="" />
+              <h5>
+                1. Choose Department
+                <br />
+                <span>
+                  Select the department <br /> you want to visit.
+                </span>
+              </h5>
+            </div>
+            <i className='fa-solid fa-arrow-right'></i>
+            <div className="box-app">
+              <img src={doctor} alt="" />
+              <h5>
+                2. Select Doctor
+                <br />
+                <span>
+                  Choose from our <br /> expert doctors.
+                </span>
+              </h5>
+            </div>
+            <i className='fa-solid fa-arrow-right'></i>
+            <div className="box-app">
+              <img src={calendar} alt="" />
+              <h5>
+                3. Pick Date & Time
+                <br />
+                <span>
+                  Select a convenient <br /> Date & Time.
+                </span>
+              </h5>
+            </div>
+            <i className='fa-solid fa-arrow-right'></i>
+            <div className="box-app">
+              <img src={check} alt="" />
+              <h5>
+                4. Confirm Booking
+                <br />
+                <span>
+                  Confirm your appointment <br /> and you're all set.
+                </span>
+              </h5>
+            </div>
+          </div>
+        </section>
 
+
+        <Footer />
       </section>
     </div>
   )

@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link , useNavigate} from 'react-router-dom'
 import PatientDash from '../Components/PatientDash'
 import axios from 'axios'
 import Loader from '../Components/Loader'
 const Patient = () => {
     const [patient, setPatient] = useState([])
     const [loading, setLoading] = useState(true)
-    console.table(patient)
+    const navigate = useNavigate()
 
     useEffect(() => {
-
         const chalni = async () => {
             try {
                 const rew = await axios.get(import.meta.env.VITE_API_URL + '/api/crools',
@@ -30,12 +29,21 @@ const Patient = () => {
         }
         chalni()
     }, [])
+    const logout = async () => {
+        try {
+            localStorage.removeItem("token")
+            navigate("/")
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
     if (loading) {
         return <Loader />
     }
 
     return (
-
         <>
             <PatientDash />
             {/* <img src="/patientcare.webp" alt="" className='patient-care-image' /> */}
@@ -53,7 +61,6 @@ const Patient = () => {
                             <Link to={"appointment"}>Book Appointment</Link>
                         </div>
                     </div>
-
                     {/* for profile */}
                     <section className="mection">
 
@@ -79,7 +86,6 @@ const Patient = () => {
                                         />
                                     )
                                 }
-
                             </div>
                             <section className="detail-p">
                                 <div>
@@ -124,10 +130,10 @@ const Patient = () => {
                                         <i class="fa-solid fa-pen-to-square"></i>
                                         <h5>Edit</h5>
                                     </Link>
-                                    <Link>
+                                    <button onClick={logout}>
                                         <i class="fa-solid fa-right-from-bracket"></i>
                                         <h5>Logout</h5>
-                                    </Link>
+                                    </button>
                                 </div>
 
                             </section>

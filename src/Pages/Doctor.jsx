@@ -28,7 +28,7 @@ const Doctor = () => {
             });
             
             if(res.data.token){
-                navigate("okay")
+                navigate("/okay")
             }
         }
         catch (error) {

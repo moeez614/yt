@@ -1,14 +1,15 @@
 import React from 'react'
-
+import DrDashboard from '../Components/DrDashboard'
+import { Outlet } from 'react-router-dom'
+import Pai from '../Components/Pai'
 const Dr_profile = () => {
   return (
-    <div>
-      <div className='dr-chalo'>
-        <img src="/white-logo.png" alt="logo" />
-      </div>
-      <div className="dr-baki">
-        djhfg
-      </div>
+    <div className='okha'>
+      <DrDashboard />
+      <section className='adjustment'>
+        <Pai />
+        <Outlet />
+      </section>
     </div>
   )
 }
