@@ -52,7 +52,7 @@ const Schedule = () => {
                         Admit Patient &nbsp;
                         <span>Follow up . 30 min</span>
                     </h6>
-                    <NavLink>Start Visit</NavLink>
+                    <NavLink to={"/report"}>Start Visit</NavLink>
                 </section>
             </section>
         </div>

@@ -26,6 +26,8 @@ import DrMain from './Pages/DrMain'
 const DrMain2 = lazy(() => import('./Pages/DrMain2'))
 const Medicalreport = lazy(() => import('./Pages/Medicalreport'))
 const Schedule = lazy(() => import('./Pages/Schedule'))
+const Forat = lazy(() => import('./Pages/Format'))
+const Settings = lazy(() => import('./Pages/Settings'))
 
 function App() {
 
@@ -134,7 +136,9 @@ function App() {
             <Route path='today_patient' element={<DrMain2 />}></Route>
             <Route path='medical_report' element={<Medicalreport />}></Route>
             <Route path='schedule' element={<Schedule />}></Route>
+            <Route path='settings' element={<Settings />}></Route>
           </Route>
+            <Route path='/report' element={<Forat />}></Route>
 
         </Routes>
       </HashRouter>
